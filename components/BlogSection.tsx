@@ -127,7 +127,7 @@ function BlogCard({ post, index }: BlogCardProps) {
 export default function BlogSection() {
     return (
         <section className="bg-[#1a0a1a] py-16 lg:py-24">
-            <div className="mx-auto max-w-[1440px] px-4 lg:px-8">
+            <div className="mx-auto  px-4 lg:px-8">
                 {/* Section Title */}
                 <motion.h2
                     initial={{ opacity: 0, y: 20 }}
