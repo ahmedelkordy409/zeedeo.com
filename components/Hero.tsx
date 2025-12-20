@@ -7,8 +7,8 @@ import PlayIcon from "./icons/PlayIcon";
 
 export default function Hero() {
     return (
-        <section className="relative min-h-[calc(100vh-72px)] overflow-hidden">
-            <div className="mx-auto grid h-full grid-cols-1 items-center gap-8 px-8  lg:grid-cols-5 lg:px-16">
+        <section className="relative h-[calc(100vh-72px)] overflow-hidden flex items-center">
+            <div className="mx-auto grid w-full grid-cols-1 items-center gap-8 px-8 lg:grid-cols-5 lg:px-16">
                 {/* Left Content - 3 columns */}
                 <div className="relative z-10 lg:col-span-3">
                     {/* Main Heading */}
@@ -84,7 +84,7 @@ export default function Hero() {
                 >
 
                     {/* Image Container */}
-                    <div className="relative h-[600px] max-w-[550px] overflow-hidden ml-auto">
+                    <div className="relative h-[70vh] max-w-[550px] overflow-hidden ml-auto">
                         <Image
                             src="/hero-1.png"
                             alt="Two women smiling"

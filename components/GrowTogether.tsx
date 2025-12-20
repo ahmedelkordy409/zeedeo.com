@@ -6,7 +6,7 @@ import PlayIcon from "./icons/PlayIcon";
 
 export default function GrowTogether() {
     return (
-        <section className="relative flex h-screen items-center justify-center overflow-hidden">
+        <section className="relative flex min-h-full items-center justify-center overflow-hidden py-20 lg:py-32">
             {/* Content */}
             <motion.div
                 initial={{ opacity: 0, y: 20 }}
