@@ -2,7 +2,8 @@
 
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { JoinBetaFormData } from "./types";
+import { JoinBetaFormData, SubmissionData } from "./types";
+import { saveToSheet } from "@/lib/utils";
 import Step1 from "./steps/Step1";
 import Step2 from "./steps/Step2";
 import Step3 from "./steps/Step3";
@@ -41,6 +42,7 @@ export default function JoinBetaForm() {
     const [formData, setFormData] = useState<JoinBetaFormData>({
         fullName: "",
         email: "",
+        confirmEmail: "",
         profile: "",
         mobileType: "",
         goals: [],
@@ -59,6 +61,21 @@ export default function JoinBetaForm() {
     const handleBack = () => {
         setDirection(-1);
         setStep((prev) => Math.max(prev - 1, 1));
+    };
+
+    const handleSubmit = async () => {
+        const submissionData: SubmissionData = {
+            name: formData.fullName,
+            category: formData.profile,
+            email: formData.email,
+            mobileType: formData.mobileType,
+            selectedCategory: formData.goals.join(", "),
+            selectedBenefit: formData.benefits.join(", "),
+            createdAt: new Date().toISOString(),
+        };
+        await saveToSheet(submissionData);
+        setDirection(1);
+        setStep(4);
     };
 
     const renderStep = () => {
@@ -87,6 +104,7 @@ export default function JoinBetaForm() {
                         updateFormData={updateFormData}
                         onNext={handleNext}
                         onBack={handleBack}
+                        onSubmit={handleSubmit}
                     />
                 );
             case 4:
@@ -112,7 +130,7 @@ export default function JoinBetaForm() {
 
     return (
         <div className="flex min-h-[calc(100vh-72px)] items-start justify-between gap-16 px-8 py-20 lg:px-16">
-            <div className="max-w-[420px] pt-10">
+            <div className="max-w-[600px] pt-10">
                 <AnimatePresence mode="wait" custom={direction}>
                     <motion.h1
                         key={step}
@@ -129,7 +147,10 @@ export default function JoinBetaForm() {
                 </AnimatePresence>
             </div>
 
-            <div className="flex-shrink-0">
+            <div
+                className="flex-shrink-0 rounded-[16px] p-8 backdrop-blur-[16px]"
+                style={{ border: '1px solid #B6A4A2' }}
+            >
                 <AnimatePresence mode="wait" custom={direction}>
                     <motion.div
                         key={step}

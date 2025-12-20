@@ -12,8 +12,9 @@ const benefits = [
     "Invite your Friends and Colleagues First",
 ];
 
-export default function Step3({ formData, updateFormData, onNext, onBack }: StepProps) {
+export default function Step3({ formData, updateFormData, onBack, onSubmit }: StepProps) {
     const [error, setError] = useState<string | null>(null);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
     const toggleBenefit = (benefit: string) => {
         const currentBenefits = formData.benefits || [];
@@ -25,12 +26,16 @@ export default function Step3({ formData, updateFormData, onNext, onBack }: Step
         if (error) setError(null);
     };
 
-    const handleNext = () => {
+    const handleSubmit = async () => {
         if (!formData.benefits || formData.benefits.length === 0) {
             setError("Please select at least one benefit");
             return;
         }
-        onNext();
+        if (onSubmit) {
+            setIsSubmitting(true);
+            await onSubmit();
+            setIsSubmitting(false);
+        }
     };
 
     return (
@@ -45,9 +50,9 @@ export default function Step3({ formData, updateFormData, onNext, onBack }: Step
                         key={benefit}
                         type="button"
                         onClick={() => toggleBenefit(benefit)}
-                        className={`h-[44px] w-full rounded-[8px] border px-4 text-[13px] font-medium transition-colors ${formData.benefits?.includes(benefit)
-                                ? "border-[#e91e8c] bg-[#e91e8c]/10 text-white"
-                                : "border-white/15 bg-transparent text-white/80 hover:border-white/30"
+                        className={`h-[44px] w-full rounded-[8px] border-0 px-4 text-[13px] font-medium transition-all duration-300 backdrop-blur-[8px] ${formData.benefits?.includes(benefit)
+                            ? "shadow-[inset_1px_1px_0px_rgba(233,30,140,1),_inset_-1px_-1px_0px_rgba(233,30,140,0.5)] bg-[#e91e8c]/10 text-white"
+                            : "shadow-[inset_1px_1px_0px_rgba(255,255,255,1),_inset_-1px_-1px_0px_rgba(255,255,255,0.5)] bg-transparent text-white/80 hover:bg-white/5"
                             }`}
                     >
                         {benefit}
@@ -63,16 +68,25 @@ export default function Step3({ formData, updateFormData, onNext, onBack }: Step
                 <button
                     type="button"
                     onClick={onBack}
-                    className="h-[40px] flex-1 rounded-full border border-white/20 bg-transparent px-8 text-[14px] font-medium text-white transition-colors hover:bg-white/5"
+                    disabled={isSubmitting}
+                    className="h-[44px] flex-1 rounded-full border border-white/20 bg-transparent px-8 text-[14px] font-medium text-white transition-all hover:bg-white/5 disabled:opacity-50"
                 >
                     Back
                 </button>
                 <button
                     type="button"
-                    onClick={handleNext}
-                    className="h-[40px] flex-1 rounded-full bg-[#2a1a3a] px-8 text-[14px] font-medium text-white transition-colors hover:bg-[#3a2a4a]"
+                    onClick={handleSubmit}
+                    disabled={isSubmitting}
+                    className="h-[44px] flex-1 rounded-full border border-white/20 bg-transparent px-8 text-[14px] font-medium text-white transition-all hover:bg-white/5 disabled:opacity-50 flex items-center justify-center gap-2"
                 >
-                    Next
+                    {isSubmitting ? (
+                        <>
+                            <div className="h-4 w-4 animate-spin rounded-full border-2 border-white border-t-transparent" />
+                            Submitting...
+                        </>
+                    ) : (
+                        "Submit"
+                    )}
                 </button>
             </div>
         </div>

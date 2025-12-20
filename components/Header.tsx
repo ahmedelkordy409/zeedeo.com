@@ -67,22 +67,26 @@ export default function Header() {
 
                 {/* Right: Auth Buttons */}
                 <div className="flex items-center gap-3">
-                    <motion.button
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        transition={{ duration: 0.15 }}
-                        className="h-[48px] rounded-full border border-[#313131]/50 bg-black/25 px-6 text-[23px] font-medium text-white backdrop-blur-sm transition-all duration-200 hover:bg-black/35 hover:border-[#313131]/70"
-                    >
-                        Sign in
-                    </motion.button>
-                    <motion.button
-                        whileHover={{ scale: 1.02 }}
-                        whileTap={{ scale: 0.98 }}
-                        transition={{ duration: 0.15 }}
-                        className="h-[48px] rounded-full border border-[#D91883]/20 bg-[#D91883]/40 px-6 text-[23px] font-medium text-white backdrop-blur-sm transition-all duration-200 hover:bg-[#D91883]/50 hover:border-[#D91883]/30"
-                    >
-                        Sign Up
-                    </motion.button>
+                    <Link href="https://app.zeedeo.com/auth/sign-in">
+                        <motion.span
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            transition={{ duration: 0.15 }}
+                            className="inline-flex h-[48px] items-center rounded-full border border-[#313131]/50 bg-black/25 px-6 text-[23px] font-medium text-white backdrop-blur-sm transition-all duration-200 hover:bg-black/35 hover:border-[#313131]/70"
+                        >
+                            Sign in
+                        </motion.span>
+                    </Link>
+                    <Link href="https://app.zeedeo.com/auth/sign-up">
+                        <motion.span
+                            whileHover={{ scale: 1.02 }}
+                            whileTap={{ scale: 0.98 }}
+                            transition={{ duration: 0.15 }}
+                            className="inline-flex h-[48px] items-center rounded-full border border-[#D91883]/20 bg-[#D91883]/40 px-6 text-[23px] font-medium text-white backdrop-blur-sm transition-all duration-200 hover:bg-[#D91883]/50 hover:border-[#D91883]/30"
+                        >
+                            Sign Up
+                        </motion.span>
+                    </Link>
                 </div>
             </div>
         </motion.header>

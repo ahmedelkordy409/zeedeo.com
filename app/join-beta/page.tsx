@@ -12,7 +12,7 @@ export default function JoinBetaPage() {
                     background: "linear-gradient(135deg, #1a0a1a 0%, #1e0e20 30%, #1a0a1a 50%, #2d1230 80%, #1a0a1a 100%)"
                 }}
             >
-                <div className="mx-auto max-w-[1200px]">
+                <div className="mx-auto max-w-[1620px]">
                     <JoinBetaForm />
                 </div>
             </main>
