@@ -91,32 +91,49 @@ function BlogCard({ post, index }: BlogCardProps) {
             className="group relative"
         >
             <Link href={`/blog/${post.slug}`} className="block">
+                {/* Outer wrapper with gradient border */}
                 <motion.div
                     whileHover={{ scale: 1.02 }}
                     transition={{ duration: 0.2 }}
-                    className="relative aspect-[4/3] overflow-hidden rounded-xl"
+                    className="relative rounded-[16px] p-[1px]"
+                    style={{
+                        background: "linear-gradient(135deg, rgba(217, 24, 131, 0.6) 0%, rgba(217, 24, 131, 0.3) 50%, rgba(217, 24, 131, 0.15) 100%)"
+                    }}
                 >
-                    {/* Image */}
-                    <Image
-                        src={post.image}
-                        alt={post.title}
-                        fill
-                        className="object-cover transition-transform duration-300 group-hover:scale-105"
-                    />
+                    {/* Inner card container */}
+                    <div className="relative aspect-[4/3] overflow-hidden rounded-[14px] bg-[#1a0a1a]">
+                        {/* Image */}
+                        <Image
+                            src={post.image}
+                            alt={post.title}
+                            fill
+                            className="object-cover transition-transform duration-300 group-hover:scale-105"
+                        />
 
-                    {/* Dark Overlay */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent" />
+                        {/* Dark Overlay - stronger gradient from bottom */}
+                        <div
+                            className="absolute inset-0"
+                            style={{
+                                background: "linear-gradient(to top, rgba(0, 0, 0, 0.85) 0%, rgba(0, 0, 0, 0.5) 30%, rgba(0, 0, 0, 0.1) 60%, transparent 100%)"
+                            }}
+                        />
 
-                    {/* Date Badge */}
-                    <div className="absolute right-3 top-3 rounded-full bg-white/90 px-3 py-1 text-[11px] font-medium text-gray-800 backdrop-blur-sm">
-                        {post.date}
-                    </div>
+                        {/* Date Badge */}
+                        <div
+                            className="absolute right-4 top-4 rounded-full border border-white/20 px-4 py-1.5 text-[12px] font-medium text-white backdrop-blur-sm"
+                            style={{
+                                background: "rgba(30, 20, 40, 0.7)"
+                            }}
+                        >
+                            {post.date}
+                        </div>
 
-                    {/* Title */}
-                    <div className="absolute bottom-0 left-0 right-0 p-4">
-                        <h3 className="line-clamp-2 text-[15px] font-semibold leading-snug text-white">
-                            {post.title}
-                        </h3>
+                        {/* Title */}
+                        <div className="absolute bottom-0 left-0 right-0 p-5">
+                            <h3 className="line-clamp-2 text-[17px] font-semibold leading-[1.35] text-white">
+                                {post.title}
+                            </h3>
+                        </div>
                     </div>
                 </motion.div>
             </Link>
@@ -154,35 +171,48 @@ export default function BlogSection() {
                     transition={{ duration: 0.5, delay: 0.3 }}
                     className="mt-12 flex justify-center"
                 >
-                    <div className="flex items-center gap-8 rounded-full border border-white/20 bg-[#1a0a1a] px-6 py-3">
-                        {/* Previous Arrow */}
-                        <motion.button
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="text-white/70 transition-colors duration-200 hover:text-white"
-                            aria-label="Previous page"
+                    {/* Outer glow wrapper */}
+                    <div
+                        className="rounded-full p-[1px]"
+                        style={{
+                            background: "linear-gradient(135deg, rgba(100, 80, 120, 0.4) 0%, rgba(60, 50, 80, 0.2) 50%, rgba(80, 60, 100, 0.3) 100%)"
+                        }}
+                    >
+                        <div
+                            className="flex items-center gap-12 rounded-full px-8 py-3"
+                            style={{
+                                background: "linear-gradient(180deg, rgba(30, 25, 40, 0.95) 0%, rgba(20, 15, 30, 0.98) 100%)"
+                            }}
                         >
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M15 18l-6-6 6-6" />
-                            </svg>
-                        </motion.button>
+                            {/* Previous Arrow */}
+                            <motion.button
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.95 }}
+                                className="text-white/60 transition-colors duration-200 hover:text-white"
+                                aria-label="Previous page"
+                            >
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M15 18l-6-6 6-6" />
+                                </svg>
+                            </motion.button>
 
-                        {/* Page Number */}
-                        <span className="min-w-[24px] text-center text-[18px] font-medium text-white">
-                            1
-                        </span>
+                            {/* Page Number */}
+                            <span className="min-w-[20px] text-center text-[20px] font-semibold text-white">
+                                1
+                            </span>
 
-                        {/* Next Arrow */}
-                        <motion.button
-                            whileHover={{ scale: 1.1 }}
-                            whileTap={{ scale: 0.95 }}
-                            className="text-white/70 transition-colors duration-200 hover:text-white"
-                            aria-label="Next page"
-                        >
-                            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
-                                <path d="M9 18l6-6-6-6" />
-                            </svg>
-                        </motion.button>
+                            {/* Next Arrow */}
+                            <motion.button
+                                whileHover={{ scale: 1.1 }}
+                                whileTap={{ scale: 0.95 }}
+                                className="text-white/60 transition-colors duration-200 hover:text-white"
+                                aria-label="Next page"
+                            >
+                                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round">
+                                    <path d="M9 18l6-6-6-6" />
+                                </svg>
+                            </motion.button>
+                        </div>
                     </div>
                 </motion.div>
 
@@ -195,16 +225,33 @@ export default function BlogSection() {
                     className="mt-16"
                 >
                     <div
-                        className="relative overflow-hidden rounded-[24px] px-8 py-16 lg:px-16 lg:py-20"
+                        className="relative overflow-hidden rounded-[32px] px-8 py-20 lg:px-16 lg:py-24"
                         style={{
-                            background: "linear-gradient(135deg, #1e1e2f 0%, #252538 20%, #1a1a2a 40%, #1e1e2f 60%, #2a1a2f 80%, #351a30 100%)"
+                            background: "linear-gradient(135deg, #1a1a2e 0%, #1e1e35 20%, #1a1a30 40%, #251a35 60%, #351a3a 80%, #401a40 100%)",
+                            border: "1px solid #D91883"
                         }}
                     >
-                        {/* Subtle gradient overlay for depth */}
+                        {/* Blue gradient on left side */}
                         <div
-                            className="pointer-events-none absolute inset-0"
+                            className="pointer-events-none absolute inset-0 rounded-[32px]"
                             style={{
-                                background: "radial-gradient(ellipse at 80% 50%, rgba(80, 40, 80, 0.15) 0%, transparent 50%), radial-gradient(ellipse at 20% 50%, rgba(40, 40, 80, 0.1) 0%, transparent 50%)"
+                                background: "radial-gradient(ellipse 80% 100% at 0% 50%, rgba(83, 89, 226, 0.25) 0%, transparent 50%)"
+                            }}
+                        />
+
+                        {/* Pink/magenta gradient on right side - main glow */}
+                        <div
+                            className="pointer-events-none absolute inset-0 rounded-[32px]"
+                            style={{
+                                background: "radial-gradient(ellipse 80% 120% at 100% 50%, rgba(217, 24, 131, 0.35) 0%, transparent 50%)"
+                            }}
+                        />
+
+                        {/* Additional pink center-right glow */}
+                        <div
+                            className="pointer-events-none absolute inset-0 rounded-[32px]"
+                            style={{
+                                background: "radial-gradient(ellipse 60% 80% at 75% 60%, rgba(217, 24, 131, 0.20) 0%, transparent 50%)"
                             }}
                         />
 
@@ -221,18 +268,23 @@ export default function BlogSection() {
                             </p>
 
                             {/* Email Form */}
-                            <form className="mt-10">
-                                <div className="flex flex-col gap-3 sm:flex-row sm:gap-0">
+                            <form className="mt-10 w-full">
+                                <div
+                                    className="relative w-full rounded-[8px] overflow-hidden bg-transparent backdrop-blur-[8px]"
+                                >
                                     <input
                                         type="email"
                                         placeholder="Enter your email"
-                                        className="h-[52px] flex-1 rounded-full border border-white/20 bg-transparent px-6 text-[14px] text-white placeholder:text-white/40 focus:border-white/40 focus:outline-none sm:rounded-r-none sm:border-r-0"
+                                        className="h-[55px] w-full bg-transparent pl-6 pr-[130px] text-[16px] text-white placeholder:text-white/30 focus:outline-none rounded-[8px] shadow-[inset_1px_1px_0px_rgba(255,255,255,1),_inset_-1px_-1px_0px_rgba(255,255,255,0.5)]"
                                     />
                                     <motion.button
                                         type="submit"
-                                        whileHover={{ scale: 1.02 }}
+                                        whileHover={{ scale: 1.02, backgroundColor: "rgba(255, 255, 255, 0.05)" }}
                                         whileTap={{ scale: 0.98 }}
-                                        className="h-[52px] rounded-full border border-white/20 bg-[#2a1a3a] px-8 text-[14px] font-medium text-white transition-colors duration-200 hover:bg-[#3a2a4a] sm:rounded-l-none"
+                                        className="absolute right-0 top-0 h-full px-8 text-[16px] font-medium text-white transition-all duration-200 bg-transparent"
+                                        style={{
+                                            borderLeft: "1px solid rgba(255, 255, 255, 0.5)"
+                                        }}
                                     >
                                         Send
                                     </motion.button>

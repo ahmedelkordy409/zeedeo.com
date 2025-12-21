@@ -145,28 +145,28 @@ export default function ContactPage() {
                         background: "linear-gradient(135deg, #1a0a1a 0%, #1e0e20 30%, #1a0a1a 50%, #2d1230 80%, #1a0a1a 100%)"
                     }}
                 >
-                    <div className="mx-auto flex max-w-[1200px] flex-col items-center justify-center gap-12 px-6 lg:flex-row lg:items-start lg:gap-16 lg:px-8">
-                        {/* Left Side - Content */}
+                    <div className="mx-auto flex w-full max-w-[1728px] flex-col items-center justify-center gap-12 px-6 lg:flex-row lg:items-start lg:gap-16 lg:px-8">
+                        {/* Left Side - Content (50% width) */}
                         <motion.div
                             initial={{ opacity: 0, x: -20 }}
                             animate={{ opacity: 1, x: 0 }}
                             transition={{ duration: 0.6 }}
-                            className="max-w-full pt-0 lg:max-w-[350px] lg:pt-20 text-center lg:text-left"
+                            className="w-full pt-0 text-center lg:w-1/2 lg:pt-20 lg:text-left"
                         >
-                            <h1 className="text-[36px] font-semibold italic leading-tight text-white lg:text-[42px]">
+                            <h1 className="text-[70px] font-normal  leading-tight text-white lg:text-[70px]">
                                 We are here to help!
                             </h1>
-                            <p className="mt-6 text-[16px] leading-relaxed text-white/60">
+                            <p className="mt-6 text-[30px] leading-relaxed text-white">
                                 We are always here to support our community and make Zeedeo more accessible to everyone.
                             </p>
                         </motion.div>
 
-                        {/* Right Side - Form */}
+                        {/* Right Side - Form (50% width) */}
                         <motion.div
                             initial={{ opacity: 0, y: 20 }}
                             animate={{ opacity: 1, y: 0 }}
                             transition={{ duration: 0.6, delay: 0.2 }}
-                            className="relative w-full max-w-[835px] rounded-[16px] p-8 backdrop-blur-[16px] bg-transparent"
+                            className="relative w-full rounded-[16px] p-8 backdrop-blur-[16px] bg-transparent lg:w-1/2"
                             style={{
                                 border: '1px solid #B6A4A2'
                             }}
