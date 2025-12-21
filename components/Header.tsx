@@ -1,6 +1,7 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
@@ -13,6 +14,7 @@ const navItems = [
 
 export default function Header() {
     const pathname = usePathname();
+    const [isMenuOpen, setIsMenuOpen] = useState(false);
 
     const isActive = (href: string) => {
         if (href === "/") {
@@ -26,9 +28,29 @@ export default function Header() {
             initial={{ opacity: 0, y: -10 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.4, ease: "easeOut" }}
-        //    className="fixed top-0 left-0 right-0 z-50 h-[72px] bg-[#1a0a1a]/80 backdrop-blur-sm"
+            className="relative z-50"
         >
-            <div className="mx-auto flex h-full max-w-full items-center justify-between px-8 py-10">
+            <div className="mx-auto flex h-full max-w-[1728px] items-center justify-between px-4 py-6 md:px-8 md:py-10">
+                {/* Mobile: Hamburger Menu */}
+                <button
+                    onClick={() => setIsMenuOpen(!isMenuOpen)}
+                    className="flex flex-col gap-1.5 p-2 md:hidden"
+                    aria-label="Toggle menu"
+                >
+                    <motion.span
+                        animate={isMenuOpen ? { rotate: 45, y: 6 } : { rotate: 0, y: 0 }}
+                        className="h-0.5 w-6 bg-white"
+                    />
+                    <motion.span
+                        animate={isMenuOpen ? { opacity: 0 } : { opacity: 1 }}
+                        className="h-0.5 w-6 bg-white"
+                    />
+                    <motion.span
+                        animate={isMenuOpen ? { rotate: -45, y: -6 } : { rotate: 0, y: 0 }}
+                        className="h-0.5 w-6 bg-white"
+                    />
+                </button>
+
                 {/* Left: Logo + Nav */}
                 <div className="flex items-center gap-8">
                     {/* Logo */}
@@ -36,14 +58,14 @@ export default function Header() {
                         <Image
                             src="/zeedeo-icon-header.png"
                             alt="Zeedeo"
-                            width={150}
-                            height={40}
-                            className="h-13 w-auto object-contain"
+                            width={100}
+                            height={26}
+                            className="h-6 w-auto object-contain md:h-8"
                         />
                     </Link>
 
-                    {/* Navigation */}
-                    <nav className="flex items-center gap-6">
+                    {/* Navigation - Hidden on mobile */}
+                    <nav className="hidden items-center gap-10 md:flex">
                         {navItems.map((item) => (
                             <Link
                                 key={item.label}
@@ -51,7 +73,7 @@ export default function Header() {
                                 className="relative"
                             >
                                 <motion.span
-                                    className={`text-[23px] font-medium transition-colors duration-200 ${isActive(item.href)
+                                    className={`text-[18px] font-semibold transition-colors duration-200 ${isActive(item.href)
                                         ? "text-[#e91e8c]"
                                         : "text-white/90 hover:text-white"
                                         }`}
@@ -66,13 +88,13 @@ export default function Header() {
                 </div>
 
                 {/* Right: Auth Buttons */}
-                <div className="flex items-center gap-3">
+                <div className="flex items-center gap-2 md:gap-3">
                     <Link href="https://app.zeedeo.com/auth/sign-in">
                         <motion.span
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                             transition={{ duration: 0.15 }}
-                            className="inline-flex h-[48px] items-center rounded-full border border-[#313131]/50 bg-black/25 px-6 text-[23px] font-medium text-white backdrop-blur-sm transition-all duration-200 hover:bg-black/35 hover:border-[#313131]/70"
+                            className="inline-flex h-[36px] items-center rounded-full border border-[#B6A4A2]/50 bg-black/20 px-4 text-[14px] font-medium text-white backdrop-blur-[16px] transition-all duration-200 hover:bg-black/30 hover:border-[#B6A4A2]/70 md:h-[48px] md:px-6 md:text-[18px]"
                         >
                             Sign in
                         </motion.span>
@@ -82,13 +104,41 @@ export default function Header() {
                             whileHover={{ scale: 1.02 }}
                             whileTap={{ scale: 0.98 }}
                             transition={{ duration: 0.15 }}
-                            className="inline-flex h-[48px] items-center rounded-full border border-[#D91883]/20 bg-[#D91883]/40 px-6 text-[23px] font-medium text-white backdrop-blur-sm transition-all duration-200 hover:bg-[#D91883]/50 hover:border-[#D91883]/30"
+                            className="inline-flex h-[36px] items-center rounded-full border border-[#B6A4A2]/50 bg-[#D91883]/40 px-4 text-[14px] font-medium text-white backdrop-blur-[16px] transition-all duration-200 hover:bg-[#D91883]/50 hover:border-[#B6A4A2]/70 md:h-[48px] md:px-6 md:text-[18px]"
                         >
                             Sign Up
                         </motion.span>
                     </Link>
                 </div>
             </div>
+
+            {/* Mobile Menu Dropdown */}
+            <AnimatePresence>
+                {isMenuOpen && (
+                    <motion.div
+                        initial={{ opacity: 0, height: 0 }}
+                        animate={{ opacity: 1, height: "auto" }}
+                        exit={{ opacity: 0, height: 0 }}
+                        className="absolute left-0 right-0 top-full bg-[#1a0a1a]/95 backdrop-blur-lg md:hidden"
+                    >
+                        <nav className="flex flex-col px-6 py-4">
+                            {navItems.map((item) => (
+                                <Link
+                                    key={item.label}
+                                    href={item.href}
+                                    onClick={() => setIsMenuOpen(false)}
+                                    className={`py-3 text-[18px] font-semibold transition-colors duration-200 ${isActive(item.href)
+                                        ? "text-[#e91e8c]"
+                                        : "text-white/90"
+                                        }`}
+                                >
+                                    {item.label}
+                                </Link>
+                            ))}
+                        </nav>
+                    </motion.div>
+                )}
+            </AnimatePresence>
         </motion.header>
     );
 }

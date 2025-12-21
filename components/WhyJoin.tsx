@@ -5,25 +5,19 @@ import { motion } from "framer-motion";
 import Image from "next/image";
 
 const features = [
-    { text: "Post Job made easy to\nattract the right Talent", filled: false, offset: -60, video: "/videos/zeedeo-helps-video-1-1.mp4" },
-    { text: "Create Topic You Love\nto grow audiences", filled: false, offset: -30, video: "/videos/zeedeo-helps-video-2.mp4" },
-    { text: "Discover Businesses,\nPeople, Topics & Jobs", filled: false, offset: -20, video: "/videos/zeedeo-helps-video-3.mp4" },
-    { text: "Promote your\npersonal brand", filled: true, offset: 20, video: "/videos/zeedeo-helps-video-4.mp4" },
-    { text: "Video ATS to match\nTalent & Jobs", filled: false, offset: 10, video: "/videos/zeedeo-helps-video-5-1.mp4" },
-    { text: "Apply smarter  focusing\non soft skills first!", filled: false, offset: -10, video: "/videos/zeedeo-helps-video-6.mp4" },
+    { text: "Post Job made easy to\nattract the right Talent", video: "/videos/zeedeo-helps-video-1-1.mp4" },
+    { text: "Create Topic You Love\nto grow audiences", video: "/videos/zeedeo-helps-video-2.mp4" },
+    { text: "Discover Businesses,\nPeople, Topics & Jobs", video: "/videos/zeedeo-helps-video-3.mp4" },
+    { text: "Promote your\npersonal brand", video: "/videos/zeedeo-helps-video-4.mp4" },
+    { text: "Video ATS to match\nTalent & Jobs", video: "/videos/zeedeo-helps-video-5-1.mp4" },
+    { text: "Pitch your\napplication focusing\non soft skills first!", video: "/videos/zeedeo-helps-video-6.mp4" },
 ];
 
-// Wavy Line Component - uses exact Vector from Figma design
-const WavyLine = ({ index }: { index: number }) => {
-    const paths: { [key: number]: string } = {
-        0: "M0,40 C30,40 50,20 80,15 C100,12 110,15 120,20",
-        1: "M0,10 C30,10 50,30 80,35 C100,38 110,35 120,30",
-        2: "M0,25 C20,25 30,40 50,40 C70,40 70,10 50,10 C30,10 40,25 60,25 C80,25 100,25 120,25",
-        3: "M0,15 C30,15 50,35 70,40 C90,45 100,35 100,25 C100,15 90,15 95,25 C100,35 110,30 120,25",
-        4: "M114,22 C-28,182 228,41 0,0",
-        5: "M114,22 C-28,182 228,41 0,0",
-    };
+// Desktop pill offsets for staggered layout
+const desktopOffsets = [-60, -30, -20, 20, 10, -10];
 
+// Wavy Line Component for desktop
+const WavyLine = ({ index }: { index: number }) => {
     if (index === 1) {
         return (
             <svg width="92" height="40" viewBox="0 0 92 40" fill="none"
@@ -104,8 +98,6 @@ const WavyLine = ({ index }: { index: number }) => {
         );
     }
 
-    const path = paths[index] || paths[0];
-
     return (
         <svg width="120" height="50" viewBox="0 0 120 50" fill="none"
             className="hidden lg:block flex-shrink-0 absolute -left-[120px] top-1/2 -translate-y-1/2">
@@ -115,8 +107,36 @@ const WavyLine = ({ index }: { index: number }) => {
                     <stop offset="100%" stopColor="#0066FF" />
                 </linearGradient>
             </defs>
-            <path d={path} stroke={`url(#lineGradient${index})`} strokeWidth="1.5"
+            <path d="M0,40 C30,40 50,20 80,15 C100,12 110,15 120,20" stroke={`url(#lineGradient${index})`} strokeWidth="1.5"
                 strokeDasharray="4 6" strokeLinejoin="round" fill="none" />
+        </svg>
+    );
+};
+
+// Mobile Wavy Line - connects pill to phone center
+const MobileWavyLine = ({ position }: { position: 'left' | 'right' }) => {
+    if (position === 'left') {
+        return (
+            <svg width="40" height="30" viewBox="0 0 40 30" fill="none" className="absolute -right-[35px] top-1/2 -translate-y-1/2">
+                <defs>
+                    <linearGradient id="mobileLineLeft" x1="0" y1="15" x2="40" y2="15" gradientUnits="userSpaceOnUse">
+                        <stop stopColor="#0066FF" />
+                        <stop offset="1" stopColor="#EA52F8" />
+                    </linearGradient>
+                </defs>
+                <path d="M0,15 C10,15 15,5 25,10 C35,15 40,15 40,15" stroke="url(#mobileLineLeft)" strokeWidth="1" strokeDasharray="3 4" fill="none" />
+            </svg>
+        );
+    }
+    return (
+        <svg width="40" height="30" viewBox="0 0 40 30" fill="none" className="absolute -left-[35px] top-1/2 -translate-y-1/2">
+            <defs>
+                <linearGradient id="mobileLineRight" x1="40" y1="15" x2="0" y2="15" gradientUnits="userSpaceOnUse">
+                    <stop stopColor="#0066FF" />
+                    <stop offset="1" stopColor="#EA52F8" />
+                </linearGradient>
+            </defs>
+            <path d="M40,15 C30,15 25,5 15,10 C5,15 0,15 0,15" stroke="url(#mobileLineRight)" strokeWidth="1" strokeDasharray="3 4" fill="none" />
         </svg>
     );
 };
@@ -124,51 +144,214 @@ const WavyLine = ({ index }: { index: number }) => {
 export default function WhyJoin() {
     const [activeIndex, setActiveIndex] = useState(0);
     const videoRef = useRef<HTMLVideoElement>(null);
+    const mobileVideoRef = useRef<HTMLVideoElement>(null);
 
-    // Change video when active index changes
     useEffect(() => {
         const video = videoRef.current;
-        if (!video) return;
+        const mobileVideo = mobileVideoRef.current;
 
-        video.src = features[activeIndex].video;
-        video.load();
-        video.play().catch(() => { });
+        if (video) {
+            video.src = features[activeIndex].video;
+            video.load();
+            video.play().catch(() => { });
+        }
+        if (mobileVideo) {
+            mobileVideo.src = features[activeIndex].video;
+            mobileVideo.load();
+            mobileVideo.play().catch(() => { });
+        }
     }, [activeIndex]);
 
-    // Handle pill click - just change the active tab
     const handlePillClick = (index: number) => {
         setActiveIndex(index);
     };
 
     return (
-        // Section fits content naturally
-        <section
-            className="relative min-h-screen py-16 lg:py-24 flex items-center"
-        >
-            <div className="mx-auto px-6 lg:px-16 w-full">
-                <div className="grid grid-cols-1 gap-12 lg:grid-cols-12 lg:items-center lg:gap-8">
+        <section className="py-8 md:py-16 lg:py-24 px-4 md:px-6">
+            <div className="mx-auto w-full max-w-[1728px]">
 
-                    {/* Left Side - Content */}
+                {/* Mobile Layout */}
+                <div className="lg:hidden">
+                    {/* Header - Mobile */}
                     <motion.div
-                        initial={{ opacity: 0, x: -40 }}
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ duration: 0.6 }}
+                        className="text-center mb-6"
+                    >
+                        <h2 className="text-[20px] font-semibold leading-[1.2] tracking-tight sm:text-[24px]">
+                            <span className="text-white">Why Join </span>
+                            <span className="text-[#e91e8c]">Zeedeo?</span>
+                        </h2>
+
+                        <p className="mt-3 text-[9px] font-light leading-[1.6] text-white/60 sm:text-[11px] max-w-[260px] mx-auto">
+                            Because <span className="text-[#e91e8c]">YOU</span> matter! We redefine how European businesses and people connect, using video as the trust layer that drives social impact, helps you grow and stand out in a world that rewards authenticity.
+                        </p>
+                    </motion.div>
+
+                    {/* Phone with Pills Container - Centered Phone with pills around */}
+                    <div className="relative w-full" style={{ height: '420px' }}>
+
+                        {/* Phone - Centered */}
+                        <motion.div
+                            initial={{ opacity: 0, y: 20 }}
+                            whileInView={{ opacity: 1, y: 0 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.7 }}
+                            className="absolute left-1/2 -translate-x-1/2 top-[40px] z-10"
+                        >
+                            <div className="relative w-[120px] sm:w-[140px] overflow-hidden rounded-[18px] sm:rounded-[22px]" style={{ aspectRatio: '1024/1536' }}>
+                                <Image
+                                    src="/phone-frame.png"
+                                    alt="Phone Frame"
+                                    fill
+                                    className="z-20 object-contain pointer-events-none"
+                                    priority
+                                />
+                                <div className="absolute inset-0 z-10 overflow-hidden"
+                                    style={{
+                                        top: '2%',
+                                        left: '15%',
+                                        right: '15%',
+                                        bottom: '2%',
+                                        borderRadius: '14px',
+                                    }}
+                                >
+                                    <video
+                                        ref={mobileVideoRef}
+                                        autoPlay
+                                        loop
+                                        muted
+                                        playsInline
+                                        className="absolute inset-0 w-full h-full object-cover"
+                                    >
+                                        <source src={features[0].video} type="video/mp4" />
+                                    </video>
+                                </div>
+                            </div>
+                        </motion.div>
+
+                        {/* Pill 1: Create Topic - Top Left */}
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.4, delay: 0.1 }}
+                            className="absolute left-[2px] top-[50px] cursor-pointer z-20"
+                            onClick={() => handlePillClick(1)}
+                        >
+                            <div className={`relative p-[1px] rounded-full transition-all duration-300 ${activeIndex === 1 ? 'bg-gradient-to-r from-[#00c8ff] to-[#e91e8c]' : 'bg-gradient-to-r from-[#00c8ff]/50 to-[#e91e8c]/50'}`}>
+                                <div className={`whitespace-pre-line rounded-full px-2 py-1 text-[6px] font-medium leading-[1.3] text-center ${activeIndex === 1 ? 'bg-[#5b21b6] text-white' : 'bg-[#0a0512]/90 text-white/70'}`}>
+                                    {features[1].text}
+                                </div>
+                            </div>
+                        </motion.div>
+
+                        {/* Pill 0: Post Job - Top Right */}
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.4, delay: 0.15 }}
+                            className="absolute right-[2px] top-[35px] cursor-pointer z-20"
+                            onClick={() => handlePillClick(0)}
+                        >
+                            <div className={`relative p-[1px] rounded-full transition-all duration-300 ${activeIndex === 0 ? 'bg-gradient-to-r from-[#00c8ff] to-[#e91e8c]' : 'bg-gradient-to-r from-[#00c8ff]/50 to-[#e91e8c]/50'}`}>
+                                <div className={`whitespace-pre-line rounded-full px-2 py-1 text-[6px] font-medium leading-[1.3] text-center ${activeIndex === 0 ? 'bg-[#5b21b6] text-white' : 'bg-[#0a0512]/90 text-white/70'}`}>
+                                    {features[0].text}
+                                </div>
+                            </div>
+                        </motion.div>
+
+                        {/* Pill 3: Promote - Middle Left */}
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.4, delay: 0.2 }}
+                            className="absolute left-[2px] top-[140px] cursor-pointer z-20"
+                            onClick={() => handlePillClick(3)}
+                        >
+                            <div className={`relative p-[1px] rounded-full transition-all duration-300 ${activeIndex === 3 ? 'bg-gradient-to-r from-[#00c8ff] to-[#e91e8c]' : 'bg-gradient-to-r from-[#00c8ff]/50 to-[#e91e8c]/50'}`}>
+                                <div className={`whitespace-pre-line rounded-full px-2 py-1 text-[6px] font-medium leading-[1.3] text-center ${activeIndex === 3 ? 'bg-[#5b21b6] text-white' : 'bg-[#0a0512]/90 text-white/70'}`}>
+                                    {features[3].text}
+                                </div>
+                            </div>
+                        </motion.div>
+
+                        {/* Pill 2: Discover - Middle Right */}
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.4, delay: 0.25 }}
+                            className="absolute right-[2px] top-[115px] cursor-pointer z-20"
+                            onClick={() => handlePillClick(2)}
+                        >
+                            <div className={`relative p-[1px] rounded-full transition-all duration-300 ${activeIndex === 2 ? 'bg-gradient-to-r from-[#00c8ff] to-[#e91e8c]' : 'bg-gradient-to-r from-[#00c8ff]/50 to-[#e91e8c]/50'}`}>
+                                <div className={`whitespace-pre-line rounded-full px-2 py-1 text-[6px] font-medium leading-[1.3] text-center ${activeIndex === 2 ? 'bg-[#5b21b6] text-white' : 'bg-[#0a0512]/90 text-white/70'}`}>
+                                    {features[2].text}
+                                </div>
+                            </div>
+                        </motion.div>
+
+                        {/* Pill 5: Pitch - Bottom Left */}
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.4, delay: 0.3 }}
+                            className="absolute left-[10px] top-[260px] cursor-pointer z-20"
+                            onClick={() => handlePillClick(5)}
+                        >
+                            <div className={`relative p-[1px] rounded-full transition-all duration-300 ${activeIndex === 5 ? 'bg-gradient-to-r from-[#00c8ff] to-[#e91e8c]' : 'bg-gradient-to-r from-[#00c8ff]/50 to-[#e91e8c]/50'}`}>
+                                <div className={`whitespace-pre-line rounded-full px-2 py-1 text-[6px] font-medium leading-[1.3] text-center ${activeIndex === 5 ? 'bg-[#5b21b6] text-white' : 'bg-[#0a0512]/90 text-white/70'}`}>
+                                    {features[5].text}
+                                </div>
+                            </div>
+                        </motion.div>
+
+                        {/* Pill 4: Video ATS - Bottom Right */}
+                        <motion.div
+                            initial={{ opacity: 0, scale: 0.9 }}
+                            whileInView={{ opacity: 1, scale: 1 }}
+                            viewport={{ once: true }}
+                            transition={{ duration: 0.4, delay: 0.35 }}
+                            className="absolute right-[10px] top-[240px] cursor-pointer z-20"
+                            onClick={() => handlePillClick(4)}
+                        >
+                            <div className={`relative p-[1px] rounded-full transition-all duration-300 ${activeIndex === 4 ? 'bg-gradient-to-r from-[#00c8ff] to-[#e91e8c]' : 'bg-gradient-to-r from-[#00c8ff]/50 to-[#e91e8c]/50'}`}>
+                                <div className={`whitespace-pre-line rounded-full px-2 py-1 text-[6px] font-medium leading-[1.3] text-center ${activeIndex === 4 ? 'bg-[#5b21b6] text-white' : 'bg-[#0a0512]/90 text-white/70'}`}>
+                                    {features[4].text}
+                                </div>
+                            </div>
+                        </motion.div>
+                    </div>
+                </div>
+
+                {/* Desktop Layout */}
+                <div className="hidden lg:grid lg:grid-cols-12 lg:items-center lg:gap-8">
+                    {/* Right Side - Content */}
+                    <motion.div
+                        initial={{ opacity: 0, x: 40 }}
                         whileInView={{ opacity: 1, x: 0 }}
                         viewport={{ once: true }}
                         transition={{ duration: 0.7, ease: "easeOut" }}
-                        className="order-1 lg:col-span-7 text-center lg:text-left max-w-[800px]"
+                        className="lg:col-span-6 text-left max-w-[800px] lg:ml-auto order-2"
                     >
-                        <h2 className="text-[40px] font-semibold leading-[1.1] tracking-tight sm:text-[52px] lg:text-[80px]">
+                        <h2 className="text-[80px] font-semibold leading-[1.1] tracking-tight">
                             <span className="text-white">Why Join </span>
                             <span className="text-[#e91e8c]">Zeedeo</span>
                             <span className="text-[#e91e8c]">?</span>
                         </h2>
 
-                        <p className="mt-6 text-[16px] font-light leading-[1.7] text-white/70 sm:text-[18px] lg:text-[30px]">
+                        <p className="mt-6 text-[30px] font-light leading-[1.7] text-white/70">
                             Because <span className="text-[#e91e8c]">YOU</span> matter!
                             <br />
                             We redefine how European businesses and people connect, get discovered, using video as the trust layer that drives social impact, helps you grow and stand out in a world that rewards authenticity.
                         </p>
 
-                        {/* Progress indicator */}
                         <div className="mt-8 flex items-center gap-3">
                             {features.map((_, index) => (
                                 <button
@@ -188,10 +371,9 @@ export default function WhyJoin() {
                         </div>
                     </motion.div>
 
-                    {/* Right Side - Phone + Pills Container */}
-                    <div className="order-2 lg:col-span-5">
-                        <div className="flex flex-col lg:flex-row items-center lg:items-start gap-8 lg:gap-8">
-
+                    {/* Left Side - Phone + Pills Container */}
+                    <div className="lg:col-span-6 order-1">
+                        <div className="flex flex-row items-start gap-8">
                             {/* Phone */}
                             <motion.div
                                 initial={{ opacity: 0, y: 20 }}
@@ -200,9 +382,7 @@ export default function WhyJoin() {
                                 transition={{ duration: 0.7, delay: 0.1, ease: "easeOut" }}
                                 className="flex-shrink-0"
                             >
-                                {/* Aspect ratio based on phone-frame.png: 1024x1536 (2:3) */}
-                                <div className="relative w-[320px] lg:w-[450px] overflow-hidden rounded-[40px] lg:rounded-[55px]" style={{ aspectRatio: '1024/1536' }}>
-                                    {/* Phone Frame */}
+                                <div className="relative w-[450px] overflow-hidden rounded-[55px]" style={{ aspectRatio: '1024/1536' }}>
                                     <Image
                                         src="/phone-frame.png"
                                         alt="Phone Frame"
@@ -210,7 +390,6 @@ export default function WhyJoin() {
                                         className="z-20 object-contain pointer-events-none"
                                         priority
                                     />
-                                    {/* Video inside phone screen - cropped to fit screen area */}
                                     <div className="absolute inset-0 z-10 overflow-hidden"
                                         style={{
                                             top: '2%',
@@ -228,14 +407,14 @@ export default function WhyJoin() {
                                             playsInline
                                             className="absolute inset-0 w-full h-full object-cover transition-opacity duration-300"
                                         >
-                                            <source src={features[0].video} type="video/mp4" />
+                                            <source src={features[activeIndex].video} type="video/mp4" />
                                         </video>
                                     </div>
                                 </div>
                             </motion.div>
 
                             {/* Feature Pills */}
-                            <div className="flex flex-col gap-4 lg:gap-10 lg:pt-8 lg:pl-12">
+                            <div className="flex flex-col gap-10 pt-8 -ml-3">
                                 {features.map((feature, index) => (
                                     <motion.div
                                         key={index}
@@ -244,7 +423,7 @@ export default function WhyJoin() {
                                         viewport={{ once: true }}
                                         transition={{ duration: 0.5, delay: 0.15 * index }}
                                         className="relative cursor-pointer"
-                                        style={{ marginLeft: `${feature.offset}px` }}
+                                        style={{ marginLeft: `${desktopOffsets[index]}px` }}
                                         onClick={() => handlePillClick(index)}
                                     >
                                         <WavyLine index={index} />

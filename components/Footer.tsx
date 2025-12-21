@@ -12,7 +12,7 @@ export default function Footer() {
         //       background: "linear-gradient(90deg, #2d1230 0%, #1a0a1a 40%, #1a0a1a 100%)"
         //    }}
         >
-            <div className="mx-auto flex items-end justify-between px-8 lg:px-16">
+            <div className="mx-auto flex max-w-[1728px] items-end justify-between px-8 lg:px-16">
                 {/* Left Side - Stacked Logo and Links */}
                 <div className="flex items-end gap-10">
                     {/* Logo Column - Stacked */}
