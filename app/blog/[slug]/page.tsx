@@ -48,7 +48,12 @@ export default async function BlogArticlePage({ params }: BlogArticlePageProps) 
     const thumbnailImage = await getPostThumbnail(slug);
 
     return (
-        <div className="min-h-screen bg-[#1a0a1a] font-sans">
+        <div
+            className="min-h-screen font-sans"
+            style={{
+                background: "linear-gradient(135deg, #1a0a1a 0%, #2d1230 50%, #1e1040 100%)"
+            }}
+        >
             <Header />
             <main className="pt-[72px]">
                 <BlogPost data={blogData} thumbnail={thumbnailImage || ""} />

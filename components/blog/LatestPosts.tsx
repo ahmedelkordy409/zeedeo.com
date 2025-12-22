@@ -111,6 +111,73 @@ export default function LatestPosts() {
     const [currentPage, setCurrentPage] = useState(1);
     const postsPerPage = 9;
 
+    // Newsletter subscription state
+    const [email, setEmail] = useState("");
+    const [emailError, setEmailError] = useState<string | null>(null);
+    const [subscribed, setSubscribed] = useState(false);
+    const [subscribing, setSubscribing] = useState(false);
+    const [subscribeError, setSubscribeError] = useState<string | null>(null);
+
+    const validateEmail = (email: string): string | null => {
+        if (!email.trim()) {
+            return "Email is required";
+        }
+        if (!email.match(/^[^\s@]+@[^\s@]+\.[^\s@]+$/)) {
+            return "Invalid email address";
+        }
+        return null;
+    };
+
+    const handleNewsletterSubmit = async (e: React.FormEvent) => {
+        e.preventDefault();
+        setSubscribeError(null);
+
+        const validationError = validateEmail(email);
+        if (validationError) {
+            setEmailError(validationError);
+            return;
+        }
+
+        setSubscribing(true);
+
+        try {
+            const response = await fetch("/api/newsletter", {
+                method: "POST",
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ email: email.trim().toLowerCase() }),
+            });
+
+            const data = await response.json();
+
+            if (!response.ok || !data.success) {
+                if (response.status === 429) {
+                    setSubscribeError("Too many attempts. Please try again later.");
+                } else if (data.message?.includes("already subscribed")) {
+                    setSubscribeError("This email is already subscribed.");
+                } else {
+                    setSubscribeError(data.error || data.message || "Failed to subscribe");
+                }
+            } else {
+                setSubscribed(true);
+                setEmail("");
+                // Reset success message after 5 seconds
+                setTimeout(() => setSubscribed(false), 5000);
+            }
+        } catch (err) {
+            setSubscribeError("Connection error. Please try again.");
+        } finally {
+            setSubscribing(false);
+        }
+    };
+
+    const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        setEmail(e.target.value);
+        setEmailError(null);
+        setSubscribeError(null);
+    };
+
     useEffect(() => {
         getPosts().then((data) => {
             setPosts(data);
@@ -280,26 +347,46 @@ export default function LatestPosts() {
 
                             </div>
                             {/* Email Form - Input with button inside */}
-                            <form className="mt-12 w-full max-w-[1200px] mx-auto">
+                            <form className="mt-12 w-full max-w-[1200px] mx-auto" onSubmit={handleNewsletterSubmit}>
                                 <div
                                     className="relative w-full rounded-[8px] overflow-hidden bg-transparent backdrop-blur-[8px]"
                                 >
                                     <input
                                         type="email"
                                         placeholder="Enter your email"
-                                        className="h-[70px] w-full bg-transparent pl-8 pr-[150px] text-[18px] text-white placeholder:text-white focus:outline-none rounded-[8px] shadow-[inset_1px_1px_0px_rgba(255,255,255,1),_inset_-1px_-1px_0px_rgba(255,255,255,0.5)]"
+                                        value={email}
+                                        onChange={handleEmailChange}
+                                        disabled={subscribing}
+                                        className={`h-[70px] w-full bg-transparent pl-8 pr-[150px] text-[18px] text-white placeholder:text-white focus:outline-none rounded-[8px] ${emailError
+                                                ? "shadow-[inset_1px_1px_0px_rgba(255,0,0,0.5),_inset_-1px_-1px_0px_rgba(255,0,0,0.25)]"
+                                                : "shadow-[inset_1px_1px_0px_rgba(255,255,255,1),_inset_-1px_-1px_0px_rgba(255,255,255,0.5)]"
+                                            }`}
                                     />
                                     <motion.button
                                         type="submit"
-                                        whileHover={{ scale: 1.02, backgroundColor: "rgba(255, 255, 255, 0.05)" }}
-                                        whileTap={{ scale: 0.98 }}
-                                        className="absolute right-0 top-0 h-full px-10 text-[20px] font-medium text-white transition-all duration-200 bg-transparent"
+                                        disabled={subscribing}
+                                        whileHover={!subscribing ? { scale: 1.02, backgroundColor: "rgba(255, 255, 255, 0.05)" } : {}}
+                                        whileTap={!subscribing ? { scale: 0.98 } : {}}
+                                        className={`absolute right-0 top-0 h-full px-10 text-[20px] font-medium text-white transition-all duration-200 bg-transparent ${subscribing ? "opacity-50 cursor-not-allowed" : ""
+                                            }`}
                                         style={{
                                             borderLeft: "1px solid rgba(255, 255, 255, 0.5)"
                                         }}
                                     >
-                                        Send
+                                        {subscribing ? "Sending..." : "Send"}
                                     </motion.button>
+                                </div>
+                                {/* Feedback Messages */}
+                                <div className="mt-4 text-center">
+                                    {emailError && (
+                                        <p className="text-red-400 text-[16px]">{emailError}</p>
+                                    )}
+                                    {subscribeError && (
+                                        <p className="text-red-400 text-[16px]">{subscribeError}</p>
+                                    )}
+                                    {subscribed && (
+                                        <p className="text-green-400 text-[16px]">Successfully subscribed!</p>
+                                    )}
                                 </div>
                             </form>
                         </div>

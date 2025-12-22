@@ -80,22 +80,22 @@ export default function BlogPost({ data, thumbnail }: BlogPostProps) {
     return (
         <article className="relative">
             {/* Hero Section with Title */}
-            <header className="relative px-6 pt-16 pb-12 lg:pt-24 lg:pb-16">
-                <div className="mx-auto max-w-5xl text-center">
+            <header className="relative px-6 pt-20 pb-10 lg:pt-28 lg:pb-14">
+                <div className="mx-auto max-w-[900px]">
                     {/* Title */}
-                    <h1 className="text-[32px] font-bold leading-[1.15] tracking-tight text-white sm:text-[42px] lg:text-[56px]">
+                    <h1 className="text-center text-[32px] font-bold leading-[1.2] tracking-[-0.02em] text-white sm:text-[40px] lg:text-[48px]">
                         {title}
                     </h1>
 
                     {/* Date */}
                     {displayDate && (
-                        <p className="mt-6 text-[14px] text-white/50 lg:text-[16px]">
+                        <p className="mt-5 text-center text-[16px] leading-[1.5] text-white/50">
                             {formatDate(displayDate)}
                         </p>
                     )}
 
-                    {/* Social Share Icons */}
-                    <div className="mt-6 flex items-center justify-center gap-5">
+                    {/* Social Share Icons - Right aligned */}
+                    <div className="mt-8 flex items-center justify-end gap-4">
                         {socialLinks.map((social, index) => (
                             <a
                                 key={index}
@@ -103,9 +103,9 @@ export default function BlogPost({ data, thumbnail }: BlogPostProps) {
                                 target="_blank"
                                 rel="noopener noreferrer"
                                 aria-label={social.label}
-                                className="text-white/70 transition-colors duration-200 hover:text-white"
+                                className="text-white/80 transition-colors duration-200 hover:text-white"
                             >
-                                <social.icon size={22} strokeWidth={1.5} />
+                                <social.icon size={24} strokeWidth={1.5} />
                             </a>
                         ))}
                     </div>
@@ -159,54 +159,61 @@ export default function BlogPost({ data, thumbnail }: BlogPostProps) {
             {/* Blog Content Styles */}
             <style jsx global>{`
                 .blog-content {
-                    color: rgba(255, 255, 255, 0.8);
-                    font-size: 17px;
-                    line-height: 1.8;
+                    color: rgba(255, 255, 255, 0.75);
+                    font-size: 18px;
+                    line-height: 1.75;
+                    letter-spacing: -0.01em;
                 }
 
                 .blog-content h1 {
-                    color: white;
-                    font-size: 2.5rem;
+                    color: #ffffff;
+                    font-size: 32px;
                     font-weight: 700;
-                    margin-top: 2.5rem;
-                    margin-bottom: 1rem;
-                    line-height: 1.2;
+                    margin-top: 48px;
+                    margin-bottom: 24px;
+                    line-height: 1.25;
+                    letter-spacing: -0.02em;
                 }
 
                 .blog-content h2 {
-                    color: white;
-                    font-size: 1.75rem;
-                    font-weight: 600;
-                    margin-top: 2.5rem;
-                    margin-bottom: 1rem;
+                    color: #ffffff;
+                    font-size: 28px;
+                    font-weight: 700;
+                    margin-top: 48px;
+                    margin-bottom: 20px;
                     line-height: 1.3;
+                    letter-spacing: -0.02em;
                 }
 
                 .blog-content h3 {
-                    color: white;
-                    font-size: 1.4rem;
+                    color: #ffffff;
+                    font-size: 24px;
                     font-weight: 600;
-                    margin-top: 2rem;
-                    margin-bottom: 0.75rem;
-                    line-height: 1.4;
+                    margin-top: 40px;
+                    margin-bottom: 16px;
+                    line-height: 1.35;
+                    letter-spacing: -0.01em;
                 }
 
                 .blog-content h4 {
-                    color: white;
-                    font-size: 1.2rem;
+                    color: #ffffff;
+                    font-size: 20px;
                     font-weight: 600;
-                    margin-top: 1.5rem;
-                    margin-bottom: 0.5rem;
+                    margin-top: 32px;
+                    margin-bottom: 12px;
+                    line-height: 1.4;
                 }
 
                 .blog-content p {
                     color: rgba(255, 255, 255, 0.75);
-                    margin-bottom: 1.5rem;
+                    margin-bottom: 24px;
+                    font-size: 18px;
+                    line-height: 1.75;
                 }
 
                 .blog-content strong,
                 .blog-content b {
-                    color: white;
+                    color: #ffffff;
                     font-weight: 600;
                 }
 
@@ -223,13 +230,15 @@ export default function BlogPost({ data, thumbnail }: BlogPostProps) {
 
                 .blog-content ul,
                 .blog-content ol {
-                    margin-bottom: 1.5rem;
-                    padding-left: 1.5rem;
+                    margin-bottom: 24px;
+                    padding-left: 24px;
                 }
 
                 .blog-content li {
                     color: rgba(255, 255, 255, 0.75);
-                    margin-bottom: 0.5rem;
+                    margin-bottom: 8px;
+                    font-size: 18px;
+                    line-height: 1.75;
                 }
 
                 .blog-content li::marker {
@@ -238,15 +247,15 @@ export default function BlogPost({ data, thumbnail }: BlogPostProps) {
 
                 .blog-content blockquote {
                     border-left: 4px solid #e91e8c;
-                    padding-left: 1.5rem;
-                    margin: 2rem 0;
+                    padding-left: 24px;
+                    margin: 32px 0;
                     font-style: italic;
                     color: rgba(255, 255, 255, 0.7);
                 }
 
                 .blog-content code {
                     background: rgba(255, 255, 255, 0.1);
-                    padding: 0.2rem 0.4rem;
+                    padding: 3px 6px;
                     border-radius: 4px;
                     font-size: 0.9em;
                     color: #e91e8c;
@@ -256,9 +265,9 @@ export default function BlogPost({ data, thumbnail }: BlogPostProps) {
                     background: rgba(0, 0, 0, 0.3);
                     border: 1px solid rgba(255, 255, 255, 0.1);
                     border-radius: 12px;
-                    padding: 1.5rem;
+                    padding: 24px;
                     overflow-x: auto;
-                    margin: 1.5rem 0;
+                    margin: 24px 0;
                 }
 
                 .blog-content pre code {
@@ -269,7 +278,7 @@ export default function BlogPost({ data, thumbnail }: BlogPostProps) {
 
                 .blog-content img {
                     border-radius: 12px;
-                    margin: 2rem 0;
+                    margin: 32px 0;
                     max-width: 100%;
                     height: auto;
                 }
@@ -277,25 +286,25 @@ export default function BlogPost({ data, thumbnail }: BlogPostProps) {
                 .blog-content hr {
                     border: none;
                     border-top: 1px solid rgba(255, 255, 255, 0.1);
-                    margin: 2.5rem 0;
+                    margin: 40px 0;
                 }
 
                 .blog-content table {
                     width: 100%;
                     border-collapse: collapse;
-                    margin: 1.5rem 0;
+                    margin: 24px 0;
                 }
 
                 .blog-content th,
                 .blog-content td {
                     border: 1px solid rgba(255, 255, 255, 0.1);
-                    padding: 0.75rem 1rem;
+                    padding: 12px 16px;
                     text-align: left;
                 }
 
                 .blog-content th {
                     background: rgba(255, 255, 255, 0.05);
-                    color: white;
+                    color: #ffffff;
                     font-weight: 600;
                 }
 
