@@ -6,11 +6,11 @@ import Image from "next/image";
 
 const features = [
     { text: "Post Job made easy to\nattract the right Talent", video: "/videos/zeedeo-helps-video-1-1.mp4" },
-    { text: "Create Topic You Love\nto grow audiences", video: "/videos/zeedeo-helps-video-2.mp4" },
-    { text: "Discover Businesses,\nPeople, Topics & Jobs", video: "/videos/zeedeo-helps-video-3.mp4" },
-    { text: "Promote your\npersonal brand", video: "/videos/zeedeo-helps-video-4.mp4" },
-    { text: "Video ATS to match\nTalent & Jobs", video: "/videos/zeedeo-helps-video-5-1.mp4" },
-    { text: "Pitch your\napplication focusing\non soft skills first!", video: "/videos/zeedeo-helps-video-6.mp4" },
+    { text: "Create Topic You Love\nto grow audiences", video: "/videos/zeedeo-helps-video-5-1.mp4" },
+    { text: "Discover Businesses,\nPeople, Topics & Jobs", video: "/videos/Zeedeo - High Fidelity - Zeedeo - Figma 2025-12-20 17-14-40.mp4" },
+    { text: "Promote your\npersonal brand", video: "/videos/zeedeo-helps-video-2.mp4" },
+    { text: "Video ATS to match\nTalent & Jobs", video: "/videos/zeedeo-helps-video-6.mp4" },
+    { text: "Apply smarter  focusing\non soft skills first!", video: "/videos/zeedeo-helps-video-3.mp4" },
 ];
 
 // Desktop pill offsets for staggered layout
@@ -241,8 +241,8 @@ export default function WhyJoin() {
                             className="absolute left-[2px] top-[50px] cursor-pointer z-20"
                             onClick={() => handlePillClick(1)}
                         >
-                            <div className={`relative p-[1px] rounded-full transition-all duration-300 ${activeIndex === 1 ? 'bg-gradient-to-r from-[#00c8ff] to-[#e91e8c]' : 'bg-gradient-to-r from-[#00c8ff]/50 to-[#e91e8c]/50'}`}>
-                                <div className={`whitespace-pre-line rounded-full px-2 py-1 text-[6px] font-medium leading-[1.3] text-center ${activeIndex === 1 ? 'bg-[#5b21b6] text-white' : 'bg-[#0a0512]/90 text-white/70'}`}>
+                            <div className={`relative p-[6px] rounded-[20px] transition-all duration-300 bg-gradient-to-r from-[#00d4ff] via-[#7b61ff] to-[#e91e8c]`}>
+                                <div className={`whitespace-pre-line rounded-[18px] px-4 py-2.5 text-[13px] font-semibold leading-[1.35] text-center text-white ${activeIndex === 1 ? 'bg-[#5b21b6] text-white' : 'bg-[#0d0514] text-white'}`}>
                                     {features[1].text}
                                 </div>
                             </div>
@@ -257,8 +257,8 @@ export default function WhyJoin() {
                             className="absolute right-[2px] top-[35px] cursor-pointer z-20"
                             onClick={() => handlePillClick(0)}
                         >
-                            <div className={`relative p-[1px] rounded-full transition-all duration-300 ${activeIndex === 0 ? 'bg-gradient-to-r from-[#00c8ff] to-[#e91e8c]' : 'bg-gradient-to-r from-[#00c8ff]/50 to-[#e91e8c]/50'}`}>
-                                <div className={`whitespace-pre-line rounded-full px-2 py-1 text-[6px] font-medium leading-[1.3] text-center ${activeIndex === 0 ? 'bg-[#5b21b6] text-white' : 'bg-[#0a0512]/90 text-white/70'}`}>
+                            <div className={`relative p-[6px] rounded-[20px] transition-all duration-300 bg-gradient-to-r from-[#00d4ff] via-[#7b61ff] to-[#e91e8c]`}>
+                                <div className={`whitespace-pre-line rounded-[18px] px-4 py-2.5 text-[13px] font-semibold leading-[1.35] text-center text-white ${activeIndex === 0 ? 'bg-[#5b21b6] text-white' : 'bg-[#0d0514] text-white'}`}>
                                     {features[0].text}
                                 </div>
                             </div>
@@ -273,8 +273,8 @@ export default function WhyJoin() {
                             className="absolute left-[2px] top-[140px] cursor-pointer z-20"
                             onClick={() => handlePillClick(3)}
                         >
-                            <div className={`relative p-[1px] rounded-full transition-all duration-300 ${activeIndex === 3 ? 'bg-gradient-to-r from-[#00c8ff] to-[#e91e8c]' : 'bg-gradient-to-r from-[#00c8ff]/50 to-[#e91e8c]/50'}`}>
-                                <div className={`whitespace-pre-line rounded-full px-2 py-1 text-[6px] font-medium leading-[1.3] text-center ${activeIndex === 3 ? 'bg-[#5b21b6] text-white' : 'bg-[#0a0512]/90 text-white/70'}`}>
+                            <div className={`relative p-[6px] rounded-[20px] transition-all duration-300 bg-gradient-to-r from-[#00d4ff] via-[#7b61ff] to-[#e91e8c]`}>
+                                <div className={`whitespace-pre-line rounded-[18px] px-4 py-2.5 text-[13px] font-semibold leading-[1.35] text-center text-white ${activeIndex === 3 ? 'bg-[#5b21b6] text-white' : 'bg-[#0d0514] text-white'}`}>
                                     {features[3].text}
                                 </div>
                             </div>
@@ -289,8 +289,8 @@ export default function WhyJoin() {
                             className="absolute right-[2px] top-[115px] cursor-pointer z-20"
                             onClick={() => handlePillClick(2)}
                         >
-                            <div className={`relative p-[1px] rounded-full transition-all duration-300 ${activeIndex === 2 ? 'bg-gradient-to-r from-[#00c8ff] to-[#e91e8c]' : 'bg-gradient-to-r from-[#00c8ff]/50 to-[#e91e8c]/50'}`}>
-                                <div className={`whitespace-pre-line rounded-full px-2 py-1 text-[6px] font-medium leading-[1.3] text-center ${activeIndex === 2 ? 'bg-[#5b21b6] text-white' : 'bg-[#0a0512]/90 text-white/70'}`}>
+                            <div className={`relative p-[6px] rounded-[20px] transition-all duration-300 bg-gradient-to-r from-[#00d4ff] via-[#7b61ff] to-[#e91e8c]`}>
+                                <div className={`whitespace-pre-line rounded-[18px] px-4 py-2.5 text-[13px] font-semibold leading-[1.35] text-center text-white ${activeIndex === 2 ? 'bg-[#5b21b6] text-white' : 'bg-[#0d0514] text-white'}`}>
                                     {features[2].text}
                                 </div>
                             </div>
@@ -305,8 +305,8 @@ export default function WhyJoin() {
                             className="absolute left-[10px] top-[260px] cursor-pointer z-20"
                             onClick={() => handlePillClick(5)}
                         >
-                            <div className={`relative p-[1px] rounded-full transition-all duration-300 ${activeIndex === 5 ? 'bg-gradient-to-r from-[#00c8ff] to-[#e91e8c]' : 'bg-gradient-to-r from-[#00c8ff]/50 to-[#e91e8c]/50'}`}>
-                                <div className={`whitespace-pre-line rounded-full px-2 py-1 text-[6px] font-medium leading-[1.3] text-center ${activeIndex === 5 ? 'bg-[#5b21b6] text-white' : 'bg-[#0a0512]/90 text-white/70'}`}>
+                            <div className={`relative p-[6px] rounded-[20px] transition-all duration-300 bg-gradient-to-r from-[#00d4ff] via-[#7b61ff] to-[#e91e8c]`}>
+                                <div className={`whitespace-pre-line rounded-[18px] px-4 py-2.5 text-[13px] font-semibold leading-[1.35] text-center text-white ${activeIndex === 5 ? 'bg-[#5b21b6] text-white' : 'bg-[#0d0514] text-white'}`}>
                                     {features[5].text}
                                 </div>
                             </div>
@@ -321,8 +321,8 @@ export default function WhyJoin() {
                             className="absolute right-[10px] top-[240px] cursor-pointer z-20"
                             onClick={() => handlePillClick(4)}
                         >
-                            <div className={`relative p-[1px] rounded-full transition-all duration-300 ${activeIndex === 4 ? 'bg-gradient-to-r from-[#00c8ff] to-[#e91e8c]' : 'bg-gradient-to-r from-[#00c8ff]/50 to-[#e91e8c]/50'}`}>
-                                <div className={`whitespace-pre-line rounded-full px-2 py-1 text-[6px] font-medium leading-[1.3] text-center ${activeIndex === 4 ? 'bg-[#5b21b6] text-white' : 'bg-[#0a0512]/90 text-white/70'}`}>
+                            <div className={`relative p-[6px] rounded-[20px] transition-all duration-300 bg-gradient-to-r from-[#00d4ff] via-[#7b61ff] to-[#e91e8c]`}>
+                                <div className={`whitespace-pre-line rounded-[18px] px-4 py-2.5 text-[13px] font-semibold leading-[1.35] text-center text-white ${activeIndex === 4 ? 'bg-[#5b21b6] text-white' : 'bg-[#0d0514] text-white'}`}>
                                     {features[4].text}
                                 </div>
                             </div>
@@ -429,15 +429,15 @@ export default function WhyJoin() {
                                         <WavyLine index={index} />
 
                                         <div
-                                            className={`relative p-[1.5px] rounded-full shadow-lg shadow-black/20 w-fit transition-all duration-500 ${index === activeIndex
-                                                ? 'bg-gradient-to-r from-[#00c8ff] to-[#e91e8c] scale-105'
-                                                : 'bg-gradient-to-r from-[#00c8ff]/60 to-[#e91e8c]/60 scale-100 opacity-70 hover:opacity-90'
+                                            className={`relative p-[2px] rounded-full shadow-lg shadow-black/20 w-fit transition-all duration-500 ${index === activeIndex
+                                                ? 'bg-gradient-to-r from-[#00d4ff] via-[#7b61ff] to-[#e91e8c] scale-105'
+                                                : 'bg-gradient-to-r from-[#00d4ff] via-[#7b61ff] to-[#e91e8c] scale-100'
                                                 }`}
                                         >
                                             <div
                                                 className={`whitespace-pre-line rounded-full px-6 py-3 text-center text-[13px] font-medium leading-[1.35] w-[210px] flex items-center justify-center transition-all duration-500 ${index === activeIndex
                                                     ? "bg-[#5b21b6] text-white"
-                                                    : "bg-[#0a0512]/90 text-white/80"
+                                                    : "bg-[#0a0512] text-white"
                                                     }`}
                                             >
                                                 {feature.text}
